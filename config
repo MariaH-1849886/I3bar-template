@@ -1,0 +1,51 @@
+general {
+        output_format = "i3bar"
+        colors = true
+        markup = pango
+        interval = 1
+}
+
+order += "cpu_temperature 0"
+order += "battery 0"
+order += "disk /"
+order += "ipv6"
+order += "volume master"
+order += "tztime local"
+
+cpu_temperature 0 {
+        format = "<span background='#ff5555' color='#123456'> 🌡 </span><span background='#404040'> %degrees °C </span>"
+        path = "/sys/class/thermal/thermal_zone0/temp"
+}
+
+battery 0 {
+        format = "<span background='#50fa7b' color='#123456'> BATTERY </span><span background='#404040'> %status %percentage %remaining %emptytime </span> "
+	format_down = "No battery"
+        status_chr = "⚡ CHR"
+        status_bat = "🔋 BAT"
+        status_unk = "? UNK"
+        status_full = "☻ FULL"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+}
+
+disk "/" {
+        format = "<span background='#f1fa8c' color='#123456'> DISK </span><span background='#404040'> %free Free </span>"
+}
+
+ipv6 {
+        format_up = "<span background='#bd93f9' color='#123456'> Wi-Fi </span><span background='#404040'> %ip</span>"
+        format_down = "<span background='#bd93f9' color='#123456'> Wi-Fi </span><span background='#404040'> No Wi-Fi </span>"
+}
+
+volume master {
+        format = "<span background='#ff79c6' color='#123456'> VOLUME </span><span background='#404040'> %volume </span>"
+        format_muted = "<span background='#ff79c6' color='#123456'> VOLUME </span><span background='#404040'> Muted </span>"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+tztime local {
+		format = "<span background='#8be9fd' color='#123456'> TIME </span><span background='#404040'> %time </span>"
+		format_time = "%a %-d %b %H:%M"
+}
